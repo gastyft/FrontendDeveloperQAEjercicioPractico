@@ -1,0 +1,57 @@
+.info{
+    
+  color: black;
+    display: flex;
+    width: 100%;
+    padding-left: 20px;
+    justify-content: center;
+}
+.enlaces{
+  list-style:none ;
+  display: flex;
+  padding-left: 2px;
+  padding-top: -5px;
+}
+
+#descript{
+  padding-right:10px;
+  
+
+}
+.li{
+ 
+  
+ padding-left: -20px;
+  height: 60px;
+}
+.fa-whatsapp{
+  width: 100%;
+  padding-right: 20px;
+  font-size: 60px;
+   
+}
+
+.fa-location-dot, .fa-phone{
+  width: 100%;
+
+  font-size: 30px;
+}
+
+.powered-by {
+  text-align: center;
+  padding: 5px;
+   
+  background-color: #fff; /* Ajusta el color de fondo según tus preferencias */
+  width: 100%;
+  color: #555; /* Ajusta el color del texto según tus preferencias */
+  font-size: 14px; /* Ajusta el tamaño de fuente según tus preferencias */
+  border-top: 1px solid #ddd; /* Añade un borde superior para separación visual */
+}
+button {
+border: none;
+background: none;
+padding: 0;
+cursor: pointer;
+}.about {
+  margin-right: 20px;
+}

@@ -3,24 +3,88 @@
 <app-header></app-header>
 <div class="container">
 <h1> Desafio Dev QA Exactian</h1>
-  <!--<form (ngSubmit)="onUpdateEstudios()" class="form-Group" novalidate #f="ngForm" > 
+
+  
+    
+    <table class="table">
+      
+      <tbody>
+       <tr><td>Nombre</td>
+        <td>Apellido</td>
+        <td> DNI </td>
+        <td>Compañia</td>
+        <td>Fecha de Ingreso</td>
+        <td>Fecha de Egreso</td></tr>
+        <tr *ngFor="let datosEmpleados of empleados; let i = index">
+          <ng-container *ngIf="!actualizacionExitosa"> 
+          <td>{{ datosEmpleados?.nombre }}</td>
+          <td>{{ datosEmpleados?.apellido }}</td>
+          <td>{{ datosEmpleados?.dni }}</td>
+          <td>{{ datosEmpleados?.compania }}</td>
+          <td>{{ datosEmpleados?.fechaIngreso}}</td>
+          <td>{{ datosEmpleados?.fechaEgreso }}</td>
+        </ng-container>
+          <td> 
+          
+            <button *ngIf="!modoEdicion" class="btn btn-info" (click)="activarEdicion(i)">Editar</button>
+            <button *ngIf="modoEdicion" class="btn btn-danger" (click)="desactivarEdicion()">Cancelar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div *ngIf="modoEdicion">
+      <h2>Editar Empleado</h2>
+      <form (submit)="guardarCambios()">
+        <input type="text" [(ngModel)]="empleadoEditado.nombre" class="form-control-sm" name="nombre" placeholder="Nombre" required>
+        <input type="text" [(ngModel)]="empleadoEditado.apellido" class="form-control-sm" name="apellido" placeholder="Apellido" required>
+        <input type="text" [(ngModel)]="empleadoEditado.dni" class="form-control-sm" name="dni" placeholder="DNI">
+        <input type="text" [(ngModel)]="empleadoEditado.compania" class="form-control-sm" name="compania" placeholder="Compañía" required>
+        <p>(Formato de fecha: dd-mm-yyyy hh:mm:ss)</p>
+      <input type="text" [(ngModel)]="empleadoEditado.fechaIngreso" class="form-control-sm" name="fechaIngreso" placeholder="Fecha de Ingreso" required pattern="\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}" title="Formato requerido: dd-mm-yyyy hh:mm:ss">
+    <input type="text" [(ngModel)]="empleadoEditado.fechaEgreso" class="form-control-sm" name="fechaEgreso" placeholder="Fecha de Egreso" required pattern="\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}" title="Formato requerido: dd-mm-yyyy hh:mm:ss">
+       
+  
+       <button type="submit"  class="btn btn-primary">Guardar</button>
+        <button class="btn btn-danger" (click)="desactivarEdicion()">Cancelar</button>
+      </form>
+    </div>
+    <div *ngIf="!modoEdicion">
+      <h3>Crear nuevo empleado</h3>
+    <form  class="form-Group" novalidate #f="ngForm" > 
+    <div class="form-group">
+      <label for="form-group">Ingrese nombre de empleado: </label>
+      <input type="text" class="form-control"  placeholder="nombre empleado"  id="nombre" name="nombre" [(ngModel)]="nombre" required>
+    </div>
+    <div class="form-group">
+      <label for="form-group">Ingrese apellido: </label>
+      <input type="text" class="form-control"  placeholder="apellido empleado"  id="apellido" name="apellido" [(ngModel)]="apellido" required>
+    </div>
+    <div class="form-group">
+      <label for="form-group">Ingrese dni: </label>
+      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="dni" name="dni" [(ngModel)]="dni" required>
+    </div>
+    <div class="form-group">
+      <label for="form-group">Ingrese compañia: </label>
+      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="compania" name="compania" [(ngModel)]="compania" required>
+    </div>
     <div class="form-group">
       <label for="form-group">Ingrese nombre de estudio: </label>
-      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="nombreestudio" name="nombreestudio" [(ngModel)]="nombreestudio" required>
+      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="fechaIngreso" name="fechaIngreso" [(ngModel)]="fechaIngreso" required>
+      <div class="invalid-feedback">Complete con compañia.</div>
+      <div class="valid-feedback">Valido.</div>
     </div>
     <div class="form-group">
       <label for="form-group">Ingrese detalle de estudio: </label>
-      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="estudiodetail" name="estudiodetail" [(ngModel)]="estudiodetail" required>
-    </div>-->
-    
-    <a routerLink="/principal" > 
-    <input class="btn btn-danger" type="button" value="Volver">
-    </a>
-    
+      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="fechaEgreso" name="fechaEgreso" [(ngModel)]="fechaEgreso" required>
+    </div>
     <input class="btn btn-primary" type="submit" value="Guardar Cambios">
-
+    <input class="btn btn-danger" type="submit"  value="Volver">  
+   
     
-  <!--</form> -->
+  </form>  
   </div>
-  <app-footer></app-footer>
-
+  
+</div>
+ 
+<app-footer></app-footer>
