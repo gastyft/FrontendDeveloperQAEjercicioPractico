@@ -34,5 +34,7 @@ public getEmpleadoDNI(dni: number):Observable<empleados>{ // obtener empleado po
    public isCompaniaEqual(dni: number, compania: string): Observable<boolean> {  
     return this.http.get<boolean>(`${this.url}compania/${dni}/${compania}`);
 }
-  
+public getEmpleadosDni(dni:number):Observable<empleados>{ // metodo que trae la lista de empleados
+  return this.http.get<empleados>(`${this.url}empleadosPorDni/dni=${dni}`);
+ }
 }

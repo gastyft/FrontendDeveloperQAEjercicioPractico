@@ -14,7 +14,11 @@
         <td> DNI </td>
         <td>Compañia</td>
         <td>Fecha de Ingreso</td>
-        <td>Fecha de Egreso</td></tr>
+        <td>Fecha de Egreso</td> 
+      <td>   <input type="text" class="form-control" [(ngModel)]="dniBusqueda" (keyup.enter)="buscarPorDNI()" placeholder="Buscar por DNI">  
+         <button class="btn btn-primary" (click)="limpiarBusqueda()">Limpiar búsqueda</button></td>
+    <td> </td>  
+    </tr> 
         <tr *ngFor="let datosEmpleados of empleados; let i = index">
           <ng-container *ngIf="!actualizacionExitosa"> 
           <td>{{ datosEmpleados?.nombre }}</td>

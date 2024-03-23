@@ -39,8 +39,9 @@ export class PrincipalComponent  implements OnInit {
 actualizacionExitosa: boolean =false;
   fechaIngresoDate!: string;
   fechaEgresoDate!: string;
- 
- 
+  dniBusqueda: string = '';
+  empleadosFiltrados: empleados[] = [];
+  empleadosOriginales: any;
 
  
 
@@ -176,6 +177,24 @@ if (this.nombre && this.apellido && this.dni && this.fechaIngreso) {
   swal("", "Por favor, complete todos los campos", "error");
 }
       }
+
+      buscarPorDNI(): void {
+        if (!this.empleadosOriginales) {
+            this.empleadosOriginales = [...this.empleados]; // Almacena una copia de la lista original si aún no se ha almacenado
+        }
+        if (this.dniBusqueda.trim() === '') {
+            // Si el campo de búsqueda está vacío, restaurar la lista original de empleados
+            this.empleados = [...this.empleadosOriginales];
+        } else {
+            // Filtrar los empleados por el DNI ingresado
+            this.empleados = this.empleadosOriginales.filter((empleado: { dni: { toString: () => string | string[]; }; }) => empleado.dni.toString().includes(this.dniBusqueda.trim()));
+        }
+    }
+
+    limpiarBusqueda(): void {
+      this.dniBusqueda = ''; // Borra el contenido del campo de búsqueda
+      this.buscarPorDNI(); // Restaura la lista original de empleados
+  }
     ngOnInit(): void {
         this.cargarDatos();
    //     swal("Bienvenido a mi E-commerce", "Soy Desarrollador Full-Stack Jr y Tester Manual Trainee en busca de mi primer trabajo IT con ganas de trabajar y seguir aprendiendo en el mundo de la programación", "")
