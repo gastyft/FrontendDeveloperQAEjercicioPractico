@@ -9,7 +9,7 @@ import swal from 'sweetalert';
 import { empleados } from '../../model/empleados';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { moment } from 'ngx-bootstrap/chronos/testing/chain';
+import moment from 'moment';
 
 @Component({
     selector: 'app-principal',
