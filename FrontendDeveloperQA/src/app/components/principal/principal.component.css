@@ -1,0 +1,7 @@
+@media (max-width: 412px) {
+    .container-fluid{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }

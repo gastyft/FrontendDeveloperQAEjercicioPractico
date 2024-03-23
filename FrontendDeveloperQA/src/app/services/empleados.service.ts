@@ -19,7 +19,7 @@ public update( id:number , empleados: empleados): Observable<empleados>{ //modif
   return this.http.put<empleados>(`${this.url}editarusuario/${id}?nombre=${empleados.nombre}&apellido=${empleados.apellido}&compania=${empleados.compania}&dni=${empleados.dni}&fechaIngreso=${empleados.fechaIngreso}&fechaEgreso=${empleados.fechaEgreso}`,empleados); 
 }
 
-public deleteDispo(id: number): Observable<any>{  //borra un empleado por ID 
+public deleteEmpleado(id: number): Observable<any>{  //borra un empleado por ID 
   return this.http.delete<any>(this.url +`borrar/${id}`);
 }
 public getEmpleadoDNI(dni: number):Observable<empleados>{ // obtener empleado por ID

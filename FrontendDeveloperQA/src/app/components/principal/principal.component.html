@@ -1,24 +1,26 @@
                
   
 <app-header></app-header>
+<br>  <br> <br>  <br>
 <div class="container">
-<h1> Desafio Dev QA Exactian</h1>
-
   
-    
+    <h1>Desafio Dev QA Exactian</h1>
+  
+ 
     <table class="table">
       
       <tbody>
-       <tr><td>Nombre</td>
-        <td>Apellido</td>
-        <td> DNI </td>
-        <td>Compañia</td>
-        <td>Fecha de Ingreso</td>
-        <td>Fecha de Egreso</td> 
-      <td>   <input type="text" class="form-control" [(ngModel)]="dniBusqueda" (keyup.enter)="buscarPorDNI()" placeholder="Buscar por DNI">  
-         <button class="btn btn-primary" (click)="limpiarBusqueda()">Limpiar búsqueda</button></td>
-    <td> </td>  
+       <tr><td><b>Nombre</b></td>
+        <td><b>Apellido</b></td>
+        <td><b> DNI</b></td>
+        <td><b>Compañía</b></td>
+        <td><b>Fecha de Ingreso</b></td>
+        <td><b>Fecha de Egreso</b></td>    
+         
+        <td><input type="text" class="form-control" [(ngModel)]="dniBusqueda" (keyup.enter)="buscarPorDNI()" placeholder="Buscar por DNI">
+          <button class="btn btn-primary" (click)="limpiarBusqueda()">Limpiar búsqueda</button> </td>  
     </tr> 
+
         <tr *ngFor="let datosEmpleados of empleados; let i = index">
           <ng-container *ngIf="!actualizacionExitosa"> 
           <td>{{ datosEmpleados?.nombre }}</td>
@@ -31,7 +33,8 @@
           <td> 
           
             <button *ngIf="!modoEdicion" class="btn btn-info" (click)="activarEdicion(i)">Editar</button>
-            <button *ngIf="modoEdicion" class="btn btn-danger" (click)="desactivarEdicion()">Cancelar</button>
+            <button *ngIf="modoEdicion" class="btn btn-warning" (click)="desactivarEdicion()">Cancelar</button>
+            <button *ngIf="modoEdicion" class="btn btn-danger" (click)="EliminarEmpleado(datosEmpleados.id)">Borrar</button>
           </td>
         </tr>
       </tbody>
@@ -39,50 +42,50 @@
     
     <div *ngIf="modoEdicion">
       <h2>Editar Empleado</h2>
-      <form (submit)="guardarCambios()">
+      <form >
         <input type="text" [(ngModel)]="empleadoEditado.nombre" class="form-control-sm" name="nombre" placeholder="Nombre" required>
         <input type="text" [(ngModel)]="empleadoEditado.apellido" class="form-control-sm" name="apellido" placeholder="Apellido" required>
-        <input type="text" [(ngModel)]="empleadoEditado.dni" class="form-control-sm" name="dni" placeholder="DNI">
+        <input type="text" [(ngModel)]="empleadoEditado.dni" class="form-control-sm" name="dni" placeholder="DNI" >
         <input type="text" [(ngModel)]="empleadoEditado.compania" class="form-control-sm" name="compania" placeholder="Compañía" required>
         <p>(Formato de fecha: dd-mm-yyyy hh:mm:ss)</p>
       <input type="text" [(ngModel)]="empleadoEditado.fechaIngreso" class="form-control-sm" name="fechaIngreso" placeholder="Fecha de Ingreso" required pattern="\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}" title="Formato requerido: dd-mm-yyyy hh:mm:ss">
     <input type="text" [(ngModel)]="empleadoEditado.fechaEgreso" class="form-control-sm" name="fechaEgreso" placeholder="Fecha de Egreso" required pattern="\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}" title="Formato requerido: dd-mm-yyyy hh:mm:ss">
        
   
-       <button type="submit"  class="btn btn-primary">Guardar</button>
+       <button type="submit"  class="btn btn-primary" (click)="guardarCambios()">Guardar</button>
         <button class="btn btn-danger" (click)="desactivarEdicion()">Cancelar</button>
       </form>
     </div>
+    
     <div *ngIf="!modoEdicion">
       <h3>Crear nuevo empleado</h3>
     <form  class="form-Group"  novalidate #f="ngForm" > 
       <div class="mb-3">
         <label for="formGroupExampleInput" class="form-label">Nombre/s</label>
-        <input type="text" class="form-control"  id="nombre" placeholder="Ingrese nombre" name="nombre" [(ngModel)]="nombre"  required>
+        <input type="text" class="form-control"  id="nombre" placeholder="Ingrese nombre" name="nombre" [(ngModel)]="nombre"  required pattern="[a-zA-Z\s]*">
      
       </div>
     <div class="form-group">
       <label for="form-group">Ingrese apellido: </label>
-      <input type="text" class="form-control"  placeholder="apellido empleado"  id="apellido" name="apellido" [(ngModel)]="apellido" required>
+      <input type="text" class="form-control"  placeholder="apellido empleado"  id="apellido" name="apellido" [(ngModel)]="apellido" required pattern="[a-zA-Z\s]*">
       
     </div>
     <div class="form-group">
-      <label for="form-group">Ingrese dni: </label>
+      <label for="form-group">Ingrese DNI: (Sin puntos)</label>
       <input type="number" class="form-control"  placeholder="Complete DNI"  id="dni" name="dni" [(ngModel)]="dni" required>
     </div>
     <div class="form-group">
-      <label for="form-group">Ingrese compañia: </label>
+      <label for="form-group">Ingrese compañía: </label>
       <input type="text" class="form-control"  placeholder="Complete compañia"  id="compania" name="compania" [(ngModel)]="compania" required>
     </div>
     <div class="form-group">   
-      <label for="form-group">Ingrese fecha ingreso: </label>
-      <label>Formato: dd-mm-yyyy hh:mm:ss</label>
+      <label for="form-group">Ingrese fecha ingreso:  Formato: dd-mm-yyyy hh:mm:ss </label>
+      <label> Formato: dd-mm-yyyy hh:mm:ss</label>
       <input type="text" class="form-control"  placeholder="dd-mm-yyyy hh:mm:ss"  id="fechaIngreso" name="fechaIngreso" [(ngModel)]="fechaIngreso" required>
     </div>
  
     <div class="form-group">
-       <label for="form-group">Ingrese fecha egreso(no obligatoria): </label>
-       <label>Formato: dd-mm-yyyy hh:mm:ss</label>
+       <label for="form-group">Ingrese fecha egreso(no obligatoria):  Formato: dd-mm-yyyy hh:mm:ss</label>
       <input type="text" class="form-control"  placeholder="dd-mm-yyyy hh:mm:ss"  id="fechaEgreso" name="fechaEgreso" [(ngModel)]="fechaEgreso">
     </div>
    
