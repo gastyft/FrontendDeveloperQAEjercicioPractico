@@ -51,37 +51,42 @@
     </div>
     <div *ngIf="!modoEdicion">
       <h3>Crear nuevo empleado</h3>
-    <form  class="form-Group" novalidate #f="ngForm" > 
-    <div class="form-group">
-      <label for="form-group">Ingrese nombre de empleado: </label>
-      <input type="text" class="form-control"  placeholder="nombre empleado"  id="nombre" name="nombre" [(ngModel)]="nombre" required>
-    </div>
+    <form  class="form-Group"  novalidate #f="ngForm" > 
+      <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Nombre/s</label>
+        <input type="text" class="form-control"  id="nombre" placeholder="Ingrese nombre" name="nombre" [(ngModel)]="nombre"  required>
+     
+      </div>
     <div class="form-group">
       <label for="form-group">Ingrese apellido: </label>
       <input type="text" class="form-control"  placeholder="apellido empleado"  id="apellido" name="apellido" [(ngModel)]="apellido" required>
+      
     </div>
     <div class="form-group">
       <label for="form-group">Ingrese dni: </label>
-      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="dni" name="dni" [(ngModel)]="dni" required>
+      <input type="number" class="form-control"  placeholder="Complete DNI"  id="dni" name="dni" [(ngModel)]="dni" required>
     </div>
     <div class="form-group">
       <label for="form-group">Ingrese compañia: </label>
-      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="compania" name="compania" [(ngModel)]="compania" required>
+      <input type="text" class="form-control"  placeholder="Complete compañia"  id="compania" name="compania" [(ngModel)]="compania" required>
     </div>
+    <div class="form-group">   
+      <label for="form-group">Ingrese fecha ingreso: </label>
+      <label>Formato: dd-mm-yyyy hh:mm:ss</label>
+      <input type="text" class="form-control"  placeholder="dd-mm-yyyy hh:mm:ss"  id="fechaIngreso" name="fechaIngreso" [(ngModel)]="fechaIngreso" required>
+    </div>
+ 
     <div class="form-group">
-      <label for="form-group">Ingrese nombre de estudio: </label>
-      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="fechaIngreso" name="fechaIngreso" [(ngModel)]="fechaIngreso" required>
-      <div class="invalid-feedback">Complete con compañia.</div>
-      <div class="valid-feedback">Valido.</div>
+       <label for="form-group">Ingrese fecha egreso(no obligatoria): </label>
+       <label>Formato: dd-mm-yyyy hh:mm:ss</label>
+      <input type="text" class="form-control"  placeholder="dd-mm-yyyy hh:mm:ss"  id="fechaEgreso" name="fechaEgreso" [(ngModel)]="fechaEgreso">
     </div>
-    <div class="form-group">
-      <label for="form-group">Ingrese detalle de estudio: </label>
-      <input type="text" class="form-control"  placeholder="Complete sus estudios"  id="fechaEgreso" name="fechaEgreso" [(ngModel)]="fechaEgreso" required>
-    </div>
-    <input class="btn btn-primary" type="submit" value="Guardar Cambios">
-    <input class="btn btn-danger" type="submit"  value="Volver">  
    
-    
+
+    <input class="btn btn-primary" type="submit" (click)="CrearEmpleados()"value="Guardar Cambios"  [disabled]="!(nombre && apellido && dni && compania && fechaIngreso)">
+     
+   
+   
   </form>  
   </div>
   

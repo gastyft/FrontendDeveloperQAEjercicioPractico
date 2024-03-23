@@ -6,9 +6,13 @@ import { Error404Component } from './components/error404/error404.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClient} from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { DatePipe  } from '@angular/common';
 import { EmpleadosService } from './services/empleados.service';
 import { FormsModule } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+ 
+
 export const routes: Routes = [
     {path: '', 
     redirectTo: 'principal', pathMatch:'full'},
@@ -24,8 +28,9 @@ export const routes: Routes = [
   
   ];
   @NgModule({
-    imports: [ CommonModule, RouterModule.forRoot(routes), FormsModule ],
-    providers: [ EmpleadosService],
+    imports: [ RouterModule.forRoot(routes), FormsModule, BsDatepickerModule.forRoot(),
+      TimepickerModule.forRoot(), ],
+    providers: [DatePipe, EmpleadosService,],
     exports: [RouterModule,],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   })

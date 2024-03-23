@@ -22,17 +22,17 @@ public update( id:number , empleados: empleados): Observable<empleados>{ //modif
 public deleteDispo(id: number): Observable<any>{  //borra un empleado por ID 
   return this.http.delete<any>(this.url +`borrar/${id}`);
 }
-public getDispoId(id: number):Observable<empleados>{ // obtener empleado por ID
-  return this.http.get<empleados>(this.url + `traer/${id}`);
+public getEmpleadoDNI(dni: number):Observable<empleados>{ // obtener empleado por ID
+  return this.http.get<empleados>(this.url + `traer/${dni}`);
  }
    createEmpleado(empleados: empleados): Observable<any>{    //crea una nueva fila en la base de datos de empleados
   return this.http.post<any>(this.url + 'crear', empleados);
  }
-   public isIngresado(id:number): Observable<boolean>{  
-      return this.http.get<boolean>(this.url +`ingreso/${id}`);
+   public isIngresado(dni:number, compania: string): Observable<boolean>{  // PARA EDITAR
+      return this.http.get<boolean>(this.url +`/compania/${dni}/${compania}`);
    }
-   public isCompaniaEqual(id:number, empleados : empleados): Observable<boolean>{  
-    return this.http.get<boolean>(this.url +` /compania/${id}?compania=${empleados.compania}`);
+   public isCompaniaEqual(dni:number, compania : string): Observable<boolean>{  
+    return this.http.get<boolean>(this.url +`/compania/${dni}/${compania}`);
  }
   
 }

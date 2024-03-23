@@ -4,8 +4,8 @@ export class empleados{
     apellido: String;
    compania: String;
     dni: number;
-    fechaIngreso: Date | string; // Puede ser Date o string
-  fechaEgreso: Date | string;
+    fechaIngreso: Date | String ; 
+  fechaEgreso: Date | String;
     
 
 constructor(  
@@ -13,8 +13,8 @@ constructor(
    apellido: String,
    compania: String,
    dni: number,
-   fechaIngreso: Date | string,
-    fechaEgreso: Date | string,
+   fechaIngreso: Date | String,
+    fechaEgreso: Date | String ,
    ){
 
    this. nombre=  nombre;
