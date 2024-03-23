@@ -29,10 +29,10 @@ public getEmpleadoDNI(dni: number):Observable<empleados>{ // obtener empleado po
   return this.http.post<any>(this.url + 'crear', empleados);
  }
    public isIngresado(dni:number, compania: string): Observable<boolean>{  // PARA EDITAR
-      return this.http.get<boolean>(this.url +`/compania/${dni}/${compania}`);
+      return this.http.get<boolean>(this.url +`compania/${dni}/${compania}`);
    }
-   public isCompaniaEqual(dni:number, compania : string): Observable<boolean>{  
-    return this.http.get<boolean>(this.url +`/compania/${dni}/${compania}`);
- }
+   public isCompaniaEqual(dni: number, compania: string): Observable<boolean> {  
+    return this.http.get<boolean>(`${this.url}compania/${dni}/${compania}`);
+}
   
 }

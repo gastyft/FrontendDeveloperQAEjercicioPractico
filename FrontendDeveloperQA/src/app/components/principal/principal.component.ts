@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 import { empleados } from '../../model/empleados';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { moment } from 'ngx-bootstrap/chronos/testing/chain';
 
 @Component({
     selector: 'app-principal',
@@ -122,15 +123,25 @@ actualizacionExitosa: boolean =false;
             swal("", "Formato de fecha de ingreso incorrecto. Use el formato dd-mm-yyyy hh:mm:ss", "error");
             return; // Detener la ejecución si el formato de la fecha de ingreso es incorrecto
         }
+       
+        if (this.fechaEgreso!=='' && !fechaIngresoPattern.test(this.fechaEgreso)) {
+            swal("", "Formato de fecha de ingreso incorrecto. Use el formato dd-mm-yyyy hh:mm:ss", "error");
+            return; // Detener la ejecución si el formato de la fecha de ingreso es incorrecto
+        }
     
         // Verificar si la fecha de egreso no está vacía y su formato es incorrecto
-        if (this.fechaEgreso && !fechaIngresoPattern.test(this.fechaEgreso)) {
-            swal("", "Formato de fecha de egreso incorrecto. Use el formato dd-mm-yyyy hh:mm:ss", "error");
-            return; // Detener la ejecución si el formato de la fecha de egreso es incorrecto
-        } 
-    // Formato del string de fecha de ingreso: dd-mm-yyyy hh:mm:ss
-
-    
+        if (this.fechaIngreso && this.fechaEgreso) {
+          const fechaIngreso = moment(this.fechaIngreso, 'DD-MM-YYYY HH:mm:ss');
+          const fechaEgreso = moment(this.fechaEgreso, 'DD-MM-YYYY HH:mm:ss');
+      
+          if (fechaEgreso.isSameOrBefore(fechaIngreso)) {
+              swal("", "La fecha de egreso no puede ser menor o igual que la fecha de ingreso", "error");
+              return; // Detener la ejecución si la fecha de egreso es menor o igual que la fecha de ingreso
+          }
+      }
+      
+      
+     
  
 // Crear el objeto empleado
 
@@ -145,19 +156,14 @@ if (this.nombre && this.apellido && this.dni && this.fechaIngreso) {
               this.datosEmpleados.createEmpleado(emp).subscribe(
                   data => {
                       console.log(data);
-                      swal("", "Empleado creado", "success");
-                      setTimeout(() => {
-                          window.location.reload();
-                      }, 3000);
+                     
                   },
-                  error => {
-                      console.error(error);
-                      swal("", "Fallo al crear empleado", "error");
-                      setTimeout(() => {
-                          window.location.reload();
-                      }, 3000);
-                  }
+                
               );
+              swal("", "Empleado creado", "success");
+              setTimeout(() => {
+                  window.location.reload();
+              }, 3000);
           } else {
               // Mostrar mensaje de error si la compañía ya existe para ese DNI
               swal("", "La compañía ya existe para este empleado", "error");
