@@ -79,7 +79,8 @@ actualizacionExitosa: boolean =false;
         if (!this.camposValidosEditar()) { 
             return;
         }
-        if( !this.validarDNI(this.dni)){
+      
+        if( !this.validarDNI(this.empleadoEditado.dni)){  
             swal("", "Dni no valido \n El DNI debe estar entre 2000000 y 70000000");
             return;
         }

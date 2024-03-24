@@ -42,7 +42,7 @@
     </div>
     <div *ngIf="modoEdicion">   <!-- Si se elije modo edicion se habilita este formulario -->
       <h2>Editar Empleado</h2>
-      <form >
+      <form > 
         <input type="text" [(ngModel)]="empleadoEditado.nombre" class="form-control-sm" name="nombre" placeholder="Nombre" required>
         <input type="text" [(ngModel)]="empleadoEditado.apellido" class="form-control-sm" name="apellido" placeholder="Apellido" required>
         <input type="text" [(ngModel)]="empleadoEditado.dni" class="form-control-sm" name="dni" placeholder="DNI" >
