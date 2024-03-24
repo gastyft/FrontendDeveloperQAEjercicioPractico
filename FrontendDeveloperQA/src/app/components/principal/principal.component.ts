@@ -95,7 +95,7 @@ actualizacionExitosa: boolean =false;
             return;
         }
     
-        if (this.empleadoEditado.fechaIngreso && this.empleadoEditado.fechaEgreso && !this.validarFechaEgreso()) {
+        if (this.empleadoEditado.fechaIngreso && this.empleadoEditado.fechaEgreso && !this.validarFechaEgresoEditar()) {
             swal("", "La fecha de egreso no puede ser menor o igual que la fecha de ingreso", "error");
             return;
         }
@@ -201,6 +201,11 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
         const fechaEgreso = moment(this.fechaEgreso, 'DD-MM-YYYY HH:mm:ss');
         return fechaEgreso.isAfter(fechaIngreso);
     }
+    validarFechaEgresoEditar(): boolean {  //Validacion para que fecha ingreso no sea menor o igual que la fecha egreso utilizando biblioteca moment
+      const fechaIngreso = moment(this.empleadoEditado.fechaIngreso, 'DD-MM-YYYY HH:mm:ss');
+      const fechaEgreso = moment(this.empleadoEditado.fechaEgreso, 'DD-MM-YYYY HH:mm:ss');
+      return fechaEgreso.isAfter(fechaIngreso);
+  }
     
     verificarEmpleadoRepetido(empleado: empleados): void {  //Validacion de que no se repita una misma compania por DNI
         this.datosEmpleados.isCompaniaEqual(this.dni, this.compania).subscribe(
