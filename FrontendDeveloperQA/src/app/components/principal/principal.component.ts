@@ -36,9 +36,12 @@ export class PrincipalComponent  implements OnInit {
   fechaIngresoFinal!: Date;
   fechaEgreso: string = '';
   fechaEgresoFinal!: Date;
+  //flag 
 actualizacionExitosa: boolean =false;
+//Variables para  validar fecha
   fechaIngresoDate!: string;
   fechaEgresoDate!: string;
+  // variable para la busqueda
   dniBusqueda: string = '';
   empleadosFiltrados: empleados[] = [];
   empleadosOriginales: any;
@@ -48,12 +51,12 @@ actualizacionExitosa: boolean =false;
 
     constructor( 
       private router: Router,
-      private datosEmpleados: EmpleadosService,
-      private activatedRoute: ActivatedRoute,
+      private datosEmpleados: EmpleadosService, //Servicio de la clase Empleados
+      private activatedRoute: ActivatedRoute, // permite redirigir
      private datePipe: DatePipe,
       ) { }
     
-      cargarDatos(){
+      cargarDatos(){  //Carga de datos de empleados en lista principal usando *ngFor
         {
           this.datosEmpleados.getEmpleadosList().subscribe( data => {
             console.log(data)
@@ -61,47 +64,19 @@ actualizacionExitosa: boolean =false;
             
           }) } 
       }
-      activarEdicion(index: number): void {
+      activarEdicion(index: number): void {   //Activa la edicion de un empleado
         this.indiceEditado = index;
         this.empleadoEditado = { ...this.empleados[index] };
         this.modoEdicion = true;
       }
-      desactivarEdicion(){
+      desactivarEdicion(){  //desactiva el modo edicion
         this.modoEdicion= false;
       }
-    /*  onUpdateEmpleados(): void {
-        const id= this.activatedRoute.snapshot.params['id'];
-        
-        // Validar el formato de la fecha
-        const fechaIngresoPattern = /^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}$/;
-                
-        if (!fechaIngresoPattern.test(this.empleadoEditado.fechaIngreso) || !fechaIngresoPattern.test(this.empleadoEditado.fechaEgreso)) {
-            swal("", "Formato de fecha incorrecto. Use el formato \n dd-mm-yyyy hh:mm:ss", "error");
-            this.actualizacionExitosa=false;
-            return; // Detener la ejecución si el formato de la fecha es incorrecto
-        }
-   {
-        
-        this.datosEmpleados.update(id, this.empleadoEditado).subscribe(
-            data => {
-                console.log(data);
-    
-                swal("", "Empleado editado", "success");
-                this.actualizacionExitosa=true;
-                 
-            },
-            error => {
-                console.error(error);
-                swal("", "Ocurrió un error al editar el empleado", "error");
-            }
-        );
-    }
- 
-    }*/
-    onUpdateEmpleados(): void {
+
+    onUpdateEmpleados(): void {   //Contenedora de la funcionalidad update empleados o modificar empleados con sus validaciones 
         const id = this.activatedRoute.snapshot.params['id'];
     
-        if (!this.camposValidosEditar()) {
+        if (!this.camposValidosEditar()) { 
             return;
         }
         if( !this.validarDNI(this.dni)){
@@ -125,17 +100,17 @@ actualizacionExitosa: boolean =false;
         }
         if(!this.validarString(this.empleadoEditado.nombre)){
 swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warning");
-       return; }
+       return; 
+      }
         if(!this.validarString(this.empleadoEditado.apellido)){
             swal("Atención!","Ingreso un apellido con numeros o caracteres especiales","warning");
-              return;    }
+              return;  
+             }
     
-    
-      
         this.actualizarEmpleado(id, this.empleadoEditado);
     }
     
-    actualizarEmpleado(id: number, empleado: empleados): void {
+    actualizarEmpleado(id: number, empleado: empleados): void {  //Funcion carga un empleado por metodo put
         this.datosEmpleados.update(id, empleado).subscribe(
             data => {
                 console.log(data);
@@ -150,15 +125,15 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
     
     
       
-      guardarCambios(): void {
+      guardarCambios(): void { //Guarda cambios y llama a la funcion contenedora onUpdateEmpleados
         this.empleados[this.indiceEditado] = { ...this.empleadoEditado };
         this.onUpdateEmpleados();
         if(this.actualizacionExitosa)
         this.modoEdicion = false;
-
       }  
    
-      CrearEmpleados(): void {
+      CrearEmpleados(): void {  //Contenedora de crear empleados con sus validaciones 
+        //y con validacion de que no se repita una compania con el mismo DNI
         if (!this.camposValidos()) {
             return;
         }
@@ -181,18 +156,19 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
             return;
         }
         if(!this.validarString(this.nombre)){
-swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warning");
-       return; }
+          swal ("Atención!","Ingreso un nombre con numeros o caracteres especiales","warning");
+            return; }
         if(!this.validarString(this.apellido)){
             swal("Atención!","Ingreso un apellido con numeros o caracteres especiales","warning");
-              return;       }
+              return;      
+             }
     
         const empleado = new empleados(this.nombre, this.apellido, this.compania, this.dni, this.fechaIngreso, this.fechaEgreso);
     
         this.verificarEmpleadoRepetido(empleado);
     }
     
-    camposValidos(): boolean {
+    camposValidos(): boolean {    //Validacion de que campos mencionados en el array cumplan con que tienen datos para funcion crear
         const camposAValidar = [this.nombre, this.apellido, this.compania, this.fechaIngreso];
         for (let campo of camposAValidar) {
             if (campo.trim() === '') {
@@ -202,7 +178,7 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
         }
         return true;
     }
-    camposValidosEditar(): boolean {
+    camposValidosEditar(): boolean {  //Validacion de que campos mencionados en el array cumplan con que tienen datos para funcion editar 
         const camposAValidar = [this.empleadoEditado.nombre, this.empleadoEditado.apellido, this.empleadoEditado.compania, this.empleadoEditado.fechaIngreso];
         for (let campo of camposAValidar) {
             if (campo.trim() === '') {
@@ -214,18 +190,18 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
     }
     
     
-    validarFormatoFecha(fecha: string): boolean {
+    validarFormatoFecha(fecha: string): boolean {      //Validacion que el formato de la fecha sea dd-mm-yyyy hh:mm:ss
         const fechaPattern = /^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}$/;
         return fechaPattern.test(fecha);
     }
     
-    validarFechaEgreso(): boolean {
+    validarFechaEgreso(): boolean {  //Validacion para que fecha ingreso no sea menor o igual que la fecha egreso utilizando biblioteca moment
         const fechaIngreso = moment(this.fechaIngreso, 'DD-MM-YYYY HH:mm:ss');
         const fechaEgreso = moment(this.fechaEgreso, 'DD-MM-YYYY HH:mm:ss');
         return fechaEgreso.isAfter(fechaIngreso);
     }
     
-    verificarEmpleadoRepetido(empleado: empleados): void {
+    verificarEmpleadoRepetido(empleado: empleados): void {  //Validacion de que no se repita una misma compania por DNI
         this.datosEmpleados.isCompaniaEqual(this.dni, this.compania).subscribe(
             (companiaRepetida: boolean) => {
                 if (!companiaRepetida) {
@@ -237,7 +213,7 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
         );
     }
     
-    crearNuevoEmpleado(empleado: empleados): void {
+    crearNuevoEmpleado(empleado: empleados): void {  //Funcion que recibe por parametro un empleado y se hace la solicitud POST desde el Service de empleados
         this.datosEmpleados.createEmpleado(empleado).subscribe(
             data => {
                 console.log(data);
@@ -250,12 +226,12 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
     }
     
 
-      buscarPorDNI(): void {
+      buscarPorDNI(): void {  //Funcion buscar por DNI
         if (!this.empleadosOriginales) {
             this.empleadosOriginales = [...this.empleados]; // Almacena una copia de la lista original si aún no se ha almacenado
-        }
+        }             /// [...this.empleados] pasa por referencia la lista de empleados(Similar funcionamiento a punteros en C)
         if (this.dniBusqueda.trim() === '') {
-            // Si el campo de búsqueda está vacío, restaurar la lista original de empleados
+            // Si el campo de búsqueda está vacío, restaura la lista original de empleados
             this.empleados = [...this.empleadosOriginales];
         } else {
             // Filtrar los empleados por el DNI ingresado
@@ -267,12 +243,12 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
       this.dniBusqueda = ''; // Borra el contenido del campo de búsqueda
       this.buscarPorDNI(); // Restaura la lista original de empleados
   }
-   validarString(str: string): boolean {
-    // Expresión regular para verificar si el string contiene solo letras, espacios y acentos
+   validarString(str: string): boolean { //Validacion para nombre y apellido
+    // Expresión para verificar si el string contiene solo letras, espacios y acentos
     const pattern = /^[a-zA-Z\u00C0-\u017F\s]*$/;
     return pattern.test(str);
 }
-EliminarEmpleado(id?: number): void {
+EliminarEmpleado(id?: number): void {  //Funcion de eliminar con cartel de confirmacion de sweetAlert
     swal({
       title: "¿Estás seguro?",
       text: "Una vez eliminado, no podrás recuperar este empleado.",
@@ -303,19 +279,18 @@ EliminarEmpleado(id?: number): void {
       } 
     });
   }
-  validarDNI(dni: number): boolean {
+  validarDNI(dni: number): boolean { //Valida el dni que este entre cierto rango
     if (this.dni < 2000000 || this.dni > 70000000) {
-      // Si el DNI está fuera del rango, haz algo (por ejemplo, muestra un mensaje de error)
-      alert('El DNI debe estar entre 2000000 y 70000000');
+      // Si el DNI está fuera del rango, 
+   //   alert('El DNI debe estar entre 2000000 y 70000000');
     return false;
     }
     else 
     return true;
 }
-    ngOnInit(): void {
-        this.cargarDatos();
-   //     swal("Bienvenido a mi E-commerce", "Soy Desarrollador Full-Stack Jr y Tester Manual Trainee en busca de mi primer trabajo IT con ganas de trabajar y seguir aprendiendo en el mundo de la programación", "")
-    }
+    ngOnInit(): void {  //Ciclo de vida de Angular
+        this.cargarDatos();   //Carga datos cada vez que recarga la pagina 
+      }
 
 
 

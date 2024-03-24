@@ -1,4 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
+import { RouterLink, RouterModule, Routes } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
  
 import { PrincipalComponent } from './components/principal/principal.component';
@@ -11,7 +11,7 @@ import { EmpleadosService } from './services/empleados.service';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
- 
+
 
 export const routes: Routes = [
     {path: '', 
@@ -28,7 +28,7 @@ export const routes: Routes = [
   
   ];
   @NgModule({
-    imports: [ RouterModule.forRoot(routes), FormsModule, BsDatepickerModule.forRoot(),
+    imports: [ RouterLink,RouterModule.forRoot(routes), FormsModule, BsDatepickerModule.forRoot(),
       TimepickerModule.forRoot(), ],
     providers: [DatePipe, EmpleadosService,],
     exports: [RouterModule,],

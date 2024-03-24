@@ -19,29 +19,26 @@
 
 #descript{
   padding-right:10px;
-  
-
 }
 .li{
- 
-  
  padding-left: -20px;
   height: 60px;
 }
 .fa-linkedin{
   width: 100%;
- 
+
   font-size: 40px;
   transition: transform 0.5s ease;
 }
 .fa-linkedin:hover {
    font-size: 50px;
-   transform: scale(1.1);
+  background-color: #c79633;
+   transform: scale(1.1); 
 }
-
+ 
 .fa-location-dot{
   width: 100%;
-
+  color: #c79633;
   font-size: 30px;
 }
 
@@ -49,11 +46,11 @@
   text-align: center;
   padding: 5px;
    
-  background-color: #fff; /* Ajusta el color de fondo según tus preferencias */
+  background-color: #fff;  
   width: 100%;
-  color: #555; /* Ajusta el color del texto según tus preferencias */
-  font-size: 14px; /* Ajusta el tamaño de fuente según tus preferencias */
-  border-top: 1px solid #ddd; /* Añade un borde superior para separación visual */
+  color: #555; 
+  font-size: 14px; 
+  border-top: 1px solid #ddd;  
 }
 button {
 border: none;
