@@ -9,7 +9,7 @@ import { empleados } from '../model/empleados';
 })
 export class EmpleadosService {
  
-  url = "back-desafio-dev-qa-gastyft.koyeb.app/";
+  url = "https://desafiodevqa-gastyft.koyeb.app/empleados/";
   constructor( private http: HttpClient) { }
 
   public getEmpleadosList():Observable<empleados>{ // metodo que trae la lista de empleados
