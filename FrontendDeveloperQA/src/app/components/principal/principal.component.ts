@@ -10,7 +10,7 @@ import { empleados } from '../../model/empleados';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import moment from 'moment';
-
+import { differenceInMilliseconds, differenceInMonths, differenceInYears, differenceInSeconds, differenceInMinutes, differenceInHours, differenceInDays, parse } from 'date-fns';
 @Component({
     selector: 'app-principal',
     standalone: true,
@@ -34,7 +34,6 @@ export class PrincipalComponent  implements OnInit {
   compania: string = '';
   dni!:number ;
   fechaIngreso: string = '';
-  fechaIngresoFinal!: Date;
   fechaEgreso: string = '';
   fechaEgresoFinal!: Date;
   //flag 
@@ -108,8 +107,16 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
             swal("Atención!","Ingreso un apellido con numeros o caracteres especiales","warning");
               return;  
              }
-    
-        this.actualizarEmpleado(id, this.empleadoEditado);
+             if (this.empleadoEditado.fechaEgreso !== '') { // Si tiene datos, mostrar el tiempo transcurrido por un tiempo determinado
+              swal("", this.calcularTiempoTranscurrido(this.empleadoEditado.fechaIngreso, this.empleadoEditado.fechaEgreso));
+              
+              setTimeout(() => {
+                  this.actualizarEmpleado(this.empleadoEditado.id, this.empleadoEditado);
+              }, 6000);
+          } else {
+              // Si no hay fecha de egreso, simplemente actualizar inmediatamente
+              this.actualizarEmpleado(this.empleadoEditado.id, this.empleadoEditado);
+          }
     }
     
     actualizarEmpleado(id: number, empleado: empleados): void {  //Funcion carga un empleado por metodo put
@@ -117,9 +124,11 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
        
       });
       swal("", "Empleado editado", "success");
+      
       setTimeout(() => {
         window.location.reload();
       }, 3000);
+     
     }
     
     
@@ -130,6 +139,36 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
         if(this.actualizacionExitosa)
         this.modoEdicion = false;
       }  
+      ///Tiempo en la empresa
+      calcularTiempoTranscurrido(fechaIngresoStr: string, fechaEgresoStr: string): string {
+        const fechaIngreso = parse(fechaIngresoStr, 'dd-MM-yyyy HH:mm:ss', new Date());
+        let tiempoTranscurrido = '';
+    
+        if (fechaEgresoStr!='') { // Verificar si la fecha de egreso no está vacía
+            const fechaEgreso = parse(fechaEgresoStr, 'dd-MM-yyyy HH:mm:ss', new Date());
+        
+            const diferenciaEnMilisegundos = differenceInMilliseconds(fechaEgreso, fechaIngreso);
+            
+            if (fechaEgresoStr !== '') { // Verificar si la fecha de egreso no está vacía
+              const fechaEgreso = parse(fechaEgresoStr, 'dd-MM-yyyy HH:mm:ss', new Date());
+      
+              const diferenciaEnMinutos = differenceInMinutes(fechaEgreso, fechaIngreso);
+      
+              const años = Math.floor(diferenciaEnMinutos / (365 * 24 * 60));
+              const meses = Math.floor((diferenciaEnMinutos % (365 * 24 * 60)) / (30 * 24 * 60));
+              const dias = Math.floor((diferenciaEnMinutos % (30 * 24 * 60)) / (24 * 60));
+              const horas = Math.floor((diferenciaEnMinutos % (24 * 60)) / 60);
+              const minutos = diferenciaEnMinutos % 60;
+      
+            
+            tiempoTranscurrido = `Tiempo transcurrido: ${años} años, ${meses} meses, ${dias} días, ${horas} horas, ${minutos} minutos`;
+     
+          
+          } 
+          return tiempoTranscurrido;
+    }
+    else return "Error al calcular tiempo transcurrido"
+  }
    
       CrearEmpleados(): void {  //Contenedora de crear empleados con sus validaciones 
         //y con validacion de que no se repita una compania con el mismo DNI
@@ -209,7 +248,15 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
         this.datosEmpleados.isCompaniaEqual(this.dni, this.compania).subscribe(
             (companiaRepetida: boolean) => {
                 if (!companiaRepetida) {
+                  if (empleado.fechaEgreso !== '') { // Si tiene datos, mostrar el tiempo transcurrido por unos segundos
+                    swal("", this.calcularTiempoTranscurrido(empleado.fechaIngreso, empleado.fechaEgreso));
+                    setTimeout(() => {
+                        this.crearNuevoEmpleado(empleado);
+                    }, 6000);
+                } else {
+                    // Si no hay fecha de egreso, simplemente crear el empleado inmediatamente
                     this.crearNuevoEmpleado(empleado);
+                }
                 } else {
                     swal("", "La compañía ya existe para este empleado", "error");
                 }
@@ -224,10 +271,12 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
             },
         );
         swal("", "Empleado creado", "success");
-        setTimeout(() => {
-            window.location.reload();
-        }, 3000);
-    }
+
+       
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+     }
     
 
       buscarPorDNI(): void {  //Funcion buscar por DNI
@@ -284,7 +333,7 @@ EliminarEmpleado(id?: number): void {  //Funcion de eliminar con cartel de confi
     });
   }
   validarDNI(dni: number): boolean { //Valida el dni que este entre cierto rango
-    if (this.dni < 2000000 || this.dni > 70000000) {
+    if (dni < 2000000 || dni > 70000000) {
       // Si el DNI está fuera del rango, 
    //   alert('El DNI debe estar entre 2000000 y 70000000');
     return false;

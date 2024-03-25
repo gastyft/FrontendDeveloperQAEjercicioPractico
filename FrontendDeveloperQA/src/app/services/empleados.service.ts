@@ -16,7 +16,7 @@ export class EmpleadosService {
    return this.http.get<empleados>(`${this.url}getempleadoslist`);
   }
 public update( id:number , empleados: empleados): Observable<empleados>{ //modifica un empleado por id  y se pasa como parametro una instancia de empleados
-  return this.http.put<empleados>(`${this.url}editarusuario/${id}?nombre=${empleados.nombre}&apellido=${empleados.apellido}&compania=${empleados.compania}&dni=${empleados.dni}&fechaIngreso=${empleados.fechaIngreso}&fechaEgreso=${empleados.fechaEgreso}`,empleados); 
+  return this.http.put<empleados>(`${this.url}editar/${id}?nombre=${empleados.nombre}&apellido=${empleados.apellido}&fechaIngreso=${empleados.fechaIngreso}&fechaEgreso=${empleados.fechaEgreso}&dni=${empleados.dni}&compania=${empleados.compania}`,empleados); 
 }
 
 public deleteEmpleado(id: number): Observable<any>{  //borra un empleado por ID 

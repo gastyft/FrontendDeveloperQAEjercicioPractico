@@ -45,7 +45,7 @@
       <form > 
         <input type="text" [(ngModel)]="empleadoEditado.nombre" class="form-control-sm" name="nombre" placeholder="Nombre" required>
         <input type="text" [(ngModel)]="empleadoEditado.apellido" class="form-control-sm" name="apellido" placeholder="Apellido" required>
-        <input type="text" [(ngModel)]="empleadoEditado.dni" class="form-control-sm" name="dni" placeholder="DNI" >
+        <input type="number" [(ngModel)]="empleadoEditado.dni" class="form-control-sm" name="dni" placeholder="DNI" >
         <input type="text" [(ngModel)]="empleadoEditado.compania" class="form-control-sm" name="compania" placeholder="Compañía" required>
         <p>(Formato de fecha: dd-mm-yyyy hh:mm:ss)</p>
       <input type="text" [(ngModel)]="empleadoEditado.fechaIngreso" class="form-control-sm" name="fechaIngreso" placeholder="Fecha de Ingreso" required pattern="\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}" title="Formato requerido: dd-mm-yyyy hh:mm:ss">
