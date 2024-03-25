@@ -25,7 +25,7 @@ export class PrincipalComponent  implements OnInit {
     empleados: any;
     empleado:any;
     modoEdicion: boolean = false;
-  empleadoEditado: any = {};
+  empleadoEditado: any;
   indiceEditado: number = -1;
   //Declaro variables para Ngmodel para crear un nuevo empleado
   nombre: string = '';
@@ -43,7 +43,7 @@ actualizacionExitosa: boolean =false;
   fechaEgresoDate!: string;
   // variable para la busqueda
   dniBusqueda: string = '';
-  empleadosFiltrados: empleados[] = [];
+  empleadosFiltrados: any;
   empleadosOriginales: any;
 
  
