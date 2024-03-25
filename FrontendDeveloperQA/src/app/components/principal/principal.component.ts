@@ -76,7 +76,7 @@ actualizacionExitosa: boolean =false;
     onUpdateEmpleados(): void {   //Contenedora de la funcionalidad update empleados o modificar empleados con sus validaciones 
         const id = this.activatedRoute.snapshot.params['id'];
     
-        if (!this.camposValidosEditar()) { 
+        if (this.camposValidosEditar()) { 
             return;
         }
       
@@ -172,7 +172,7 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
    
       CrearEmpleados(): void {  //Contenedora de crear empleados con sus validaciones 
         //y con validacion de que no se repita una compania con el mismo DNI
-        if (!this.camposValidos()) {
+        if (this.camposValidos()) {
             return;
         }
         if( !this.validarDNI(this.dni)){
@@ -211,20 +211,20 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
         for (let campo of camposAValidar) {
             if (campo.trim() === '') {
                 swal("", "Los campos no pueden estar vacíos", "warning");
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
     camposValidosEditar(): boolean {  //Validacion de que campos mencionados en el array cumplan con que tienen datos para funcion editar 
         const camposAValidar = [this.empleadoEditado.nombre, this.empleadoEditado.apellido, this.empleadoEditado.compania, this.empleadoEditado.fechaIngreso];
         for (let campo of camposAValidar) {
             if (campo.trim() === '') {
                 swal("", "Los campos no pueden estar vacíos", "warning");
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
     
     

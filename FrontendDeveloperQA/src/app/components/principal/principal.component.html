@@ -52,7 +52,7 @@
     <input type="text" [(ngModel)]="empleadoEditado.fechaEgreso" class="form-control-sm" name="fechaEgreso" placeholder="Fecha de Egreso" required pattern="\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}" title="Formato requerido: dd-mm-yyyy hh:mm:ss">
        
   
-       <button type="submit"  class="btn btn-primary" (click)="guardarCambios()">Guardar</button>
+       <button type="submit"  class="btn btn-primary" (click)="guardarCambios()" [disabled]="!(empleadoEditado.nombre && empleadoEditado.apellido && empleadoEditado.dni && empleadoEditado.compania && empleadoEditado.fechaIngreso)">Guardar</button>
         <button class="btn btn-danger" (click)="desactivarEdicion()">Cancelar</button>
       </form>
     </div>
