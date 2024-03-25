@@ -22,7 +22,8 @@ import moment from 'moment';
 export class PrincipalComponent  implements OnInit {
     
     data: any;
-    empleados: any;
+    empleados:any;
+      
     empleado:any;
     modoEdicion: boolean = false;
   empleadoEditado: any;
@@ -60,7 +61,7 @@ actualizacionExitosa: boolean =false;
         {
           this.datosEmpleados.getEmpleadosList().subscribe( data => {
             console.log(data)
-            this.empleados= data;
+          this.empleados= data;
             
           }) } 
       }
@@ -112,16 +113,13 @@ swal("Atención!","Ingreso un nombre con numeros o caracteres especiales","warni
     }
     
     actualizarEmpleado(id: number, empleado: empleados): void {  //Funcion carga un empleado por metodo put
-        this.datosEmpleados.update(id, empleado).subscribe(
-            data => {
-                console.log(data);
-               
-            },);
-            swal("", "Empleado editado", "success");
-        setTimeout(() => {
-            window.location.reload();
-        }, 3000);
-        
+      this.datosEmpleados.update(id, empleado).subscribe(() => {
+       
+      });
+      swal("", "Empleado editado", "success");
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
     
     
