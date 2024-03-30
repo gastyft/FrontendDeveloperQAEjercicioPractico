@@ -1,2 +1,2 @@
 # FrontendDeveloperQAEjercicioPractico
-Frontend con Angular Framework Ejercicio practico
+Frontend con Angular Framework Desafio ejercicio practico 
